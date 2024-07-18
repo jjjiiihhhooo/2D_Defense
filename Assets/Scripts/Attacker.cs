@@ -11,16 +11,9 @@ public class Attacker : MonoBehaviour
 
     private bool isAttack;
     private float colliderDelay = 0.1f;
-    private Vector3 speedVec;
-    private Vector3 defaultVec;
 
     public bool IsAttack { get => isAttack; }
 
-    private void Awake()
-    {
-        speedVec.x = shootSpeed;
-        defaultVec.x = 1.5f;
-    }
 
     private void Update()
     {

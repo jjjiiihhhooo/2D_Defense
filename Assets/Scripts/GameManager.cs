@@ -21,8 +21,15 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            FrameSetting();
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+    }
+
+    private void FrameSetting()
+    {
+        Application.targetFrameRate = -1;
+        Application.targetFrameRate = 60;
     }
 }
