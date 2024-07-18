@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class JoystickManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private FixedJoystick joy;
+    [SerializeField] private float joyVertical;
+    [SerializeField] private float joyHorizontal;
+    [SerializeField] private float angle;
+
+    public float Angle { get => angle; }
+
+    private void Update()
     {
+        InputJoystick();
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InputJoystick()
     {
-        
+        if(joy.Vertical != 0 || joy.Horizontal != 0)
+        {
+            joyVertical = joy.Vertical;
+            joyHorizontal = joy.Horizontal;
+
+            angle = Mathf.Atan2(joyVertical, joyHorizontal) * Mathf.Rad2Deg;
+        }
+        else
+        {
+            angle = 0f;
+        }
     }
-}
+}   

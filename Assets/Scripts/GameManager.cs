@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static GameManager Instance;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private JoystickManager joystickManager;
+    [SerializeField] private StageManager stageManager;
+
+    public JoystickManager JoystickManager { get => joystickManager;}
+    public StageManager StageManager { get => stageManager;}
+
+
+    private void Awake()
     {
-        
+        if(Instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 }
