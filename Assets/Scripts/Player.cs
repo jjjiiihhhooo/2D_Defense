@@ -7,11 +7,18 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
 
+    [SerializeField] private float curHp;
+    [SerializeField] private float maxHp;
+
     [Header("무기관련")]
     [SerializeField] private Attacker attacker;
 
     [Header("렌더러")]
     [SerializeField] private SpriteRenderer playerModelRenderer;
+
+    public Attacker Attacker { get => attacker; }
+    public float CurHp { get => curHp; }
+    public float MaxHp { get => maxHp; }
 
     private void Awake()
     {
@@ -29,6 +36,16 @@ public class Player : MonoBehaviour
     private void Update()
     {
         AttackerRot();
+    }
+
+    public void Hit(float damage)
+    {
+        curHp -= damage;
+    }
+
+    public float GetAttackDamage()
+    {
+        return attacker.Damage;
     }
 
     public void AttackerRot()

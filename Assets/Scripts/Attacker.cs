@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private float maxDistance;
-    [SerializeField] private float shootSpeed;
-    [SerializeField] private Transform weaponTransform;
+    [SerializeField] private Transform weaponParent;
     [SerializeField] private BoxCollider2D weaponCol;
+    [SerializeField] private float damage;
+    [SerializeField] private float knockBackPower;
 
     private bool isAttack;
     private float colliderDelay = 0.1f;
 
     public bool IsAttack { get => isAttack; }
-
+    public float Damage { get => damage; }
+    public float KnockBackPower { get => knockBackPower; }
 
     private void Update()
     {
@@ -35,8 +36,13 @@ public class Attacker : MonoBehaviour
         
     }
 
-    public void AttackStart()
+    public void AttackCol()
     {
         weaponCol.enabled = true;
+    }
+
+    public void AttackStart()
+    {
+        weaponParent.rotation = transform.rotation;
     }
 }

@@ -8,10 +8,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private JoystickManager joystickManager;
     [SerializeField] private StageManager stageManager;
+    [SerializeField] private DataManager dataManager;
+    [SerializeField] private UIManager uiManager;
 
     public JoystickManager JoystickManager { get => joystickManager;}
     public StageManager StageManager { get => stageManager;}
-
+    public DataManager DataManager { get => dataManager; }
+    public UIManager UIManager { get => uiManager; }
 
     private void Awake()
     {
@@ -23,6 +26,10 @@ public class GameManager : MonoBehaviour
         {
             FrameSetting();
             Instance = this;
+
+            joystickManager.Init();
+            stageManager.Init();
+
             DontDestroyOnLoad(this.gameObject);
         }
     }

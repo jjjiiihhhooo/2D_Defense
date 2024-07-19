@@ -11,6 +11,11 @@ public class JoystickManager : MonoBehaviour
 
     public float Angle { get => angle; }
 
+    public void Init()
+    {
+
+    }
+
     private void Update()
     {
         InputJoystick();

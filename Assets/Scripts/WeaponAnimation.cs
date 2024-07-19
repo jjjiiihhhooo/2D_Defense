@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class WeaponAnimation : MonoBehaviour
 {
-    private Attacker attacker;
-
-    void Start()
-    {
-        attacker = transform.parent.GetComponent<Attacker>();
-    }
+    [SerializeField] private Attacker attacker;
 
     
+    
+    public void AttackCol()
+    {
+        attacker.AttackCol();
+    }
+
     public void AttackStart()
     {
         attacker.AttackStart();
     }
-
 }
