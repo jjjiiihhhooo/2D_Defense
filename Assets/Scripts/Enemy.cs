@@ -29,7 +29,7 @@ public class Enemy
     public virtual void Hit()
     {
         enemyController.VelocityZero();
-        KnockBack(Player.Instance.Attacker.KnockBackPower);
+        KnockBack(enemyController.target.GetComponent<Player>().Attacker.KnockBackPower);
         enemyController.Animator.Play(anim_names[1], 0, 0f);
     }
 

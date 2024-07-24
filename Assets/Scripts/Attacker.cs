@@ -6,14 +6,12 @@ public class Attacker : MonoBehaviour
 {
     [SerializeField] private Transform weaponParent;
     [SerializeField] private BoxCollider2D weaponCol;
-    [SerializeField] private float damage;
     [SerializeField] private float knockBackPower;
 
     private bool isAttack;
     private float colliderDelay = 0.1f;
 
     public bool IsAttack { get => isAttack; }
-    public float Damage { get => damage; }
     public float KnockBackPower { get => knockBackPower; }
 
     private void Update()

@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance;
-
-
-    [SerializeField] private float curHp;
-    [SerializeField] private float maxHp;
+    
 
     [Header("무기관련")]
     [SerializeField] private Attacker attacker;
@@ -16,21 +12,31 @@ public class Player : MonoBehaviour
     [Header("렌더러")]
     [SerializeField] private SpriteRenderer playerModelRenderer;
 
+    [Header("State")]
+    [SerializeField] private Data data;
+    [SerializeField] private float curHp;
+    [SerializeField] private float maxHp;
+
     public Attacker Attacker { get => attacker; }
     public float CurHp { get => curHp; }
-    public float MaxHp { get => maxHp; }
+    public float MaxHp { get => data.HP; }
 
-    private void Awake()
+    //public Player(Data _data)
+    //{
+    //    data = new Data(_data.Item_List, _data.LV, _data.SC, _data.HP, _data.ATK, _data.DEF, _data.EXP, _data.AS, _data.HR, _data.AA);
+    //    curHp = data.HP;
+    //}
+
+    private void OnEnable()
     {
-        if(Instance != null)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
+        Data _data = GameManager.Instance.DataManager.data;
+        data = new Data(_data.Item_List, _data.LV, _data.SC, _data.HP, _data.ATK, _data.DEF, _data.EXP, _data.AS, _data.HR);
+        curHp = data.HP;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.DataManager.SetData(data);
     }
 
     private void Update()
@@ -41,11 +47,6 @@ public class Player : MonoBehaviour
     public void Hit(float damage)
     {
         curHp -= damage;
-    }
-
-    public float GetAttackDamage()
-    {
-        return attacker.Damage;
     }
 
     public void AttackerRot()
@@ -63,5 +64,10 @@ public class Player : MonoBehaviour
         {
             playerModelRenderer.flipX = false;
         }
+    }
+
+    public float GetAttackDamage()
+    {
+        return data.ATK;
     }
 }

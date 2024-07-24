@@ -47,5 +47,5 @@ MonoBehaviour:
   enemys:
   - {fileID: 1942462910339623225, guid: f939a115512d63e4e9491b124f08e5f6, type: 3}
   - {fileID: 2687024818097306492, guid: ad24aad2fd84f2b49ae0436567db213a, type: 3}
-  maxEnemyCount: 5
+  maxEnemyCount: 10
   waveCount: 3

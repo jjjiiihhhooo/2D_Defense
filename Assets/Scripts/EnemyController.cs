@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
             enemy = new Skeleton();
 
         enemy.Awake(this);
-        target = Player.Instance.transform;
+        target = FindObjectOfType<Player>().transform;
     }
 
 
@@ -84,29 +84,36 @@ public class EnemyController : MonoBehaviour
 
     public void Dead()
     {
-
         GameManager.Instance.DataManager.PlusGold(enemy.plusGold);
-
         Enqueue();
+
+        Return();
+    }
+
+    private void Return()
+    {
+        curHp = maxHp;
+        isDead = false;
+        GameManager.Instance.ObjectPool.Return(this.gameObject);
     }
 
     private void Enqueue()
     {
         GameManager.Instance.StageManager.enemyKillQueue.Enqueue(0);
-        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Weapon")
         {
-            Hit(Player.Instance.GetAttackDamage());
+            Hit(target.GetComponent<Player>().GetAttackDamage());
         }
 
         if(other.tag == "Player")
         {
-            Player.Instance.Hit(enemy.damage);
+            target.GetComponent<Player>().Hit(enemy.damage);
             Enqueue();
+            Return();
         }
     }
 }

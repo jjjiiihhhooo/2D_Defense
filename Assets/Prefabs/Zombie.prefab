@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1c0840213859841975fffcfa651f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHp: 150
-  maxHp: 150
+  curHp: 3
+  maxHp: 3
   index: 0
   enemy:
     anim_names:

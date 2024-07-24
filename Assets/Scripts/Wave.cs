@@ -58,8 +58,11 @@ public class Wave : MonoBehaviour
                 enemyCount++;
                 int rand = Random.Range(0, enemys.Length);
                 int rand2 = Random.Range(0, GameManager.Instance.StageManager.waveSpawnTransforms.Length);
-                GameObject temp = Instantiate(enemys[rand].gameObject, GameManager.Instance.StageManager.waveSpawnTransforms[rand2].position, Quaternion.identity);
-                temp.transform.parent = this.transform;
+                
+                GameObject enemy = GameManager.Instance.ObjectPool.Dequeue(enemys[rand].name);
+                enemy.transform.position = GameManager.Instance.StageManager.waveSpawnTransforms[rand2].position;
+                enemy.transform.parent = this.transform;
+                enemy.SetActive(true);
             }
             else
             {
