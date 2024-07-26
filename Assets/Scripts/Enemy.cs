@@ -11,6 +11,7 @@ public class Enemy
     public string[] anim_names;
 
     public float plusGold;
+    public float plusEXP;
     public float damage;
 
     [SerializeField] protected float moveSpeed;
@@ -52,6 +53,7 @@ public class Zombie : Enemy
         anim_names[2] = "Die";
         moveSpeed = 1f;
         plusGold = 100f;
+        plusEXP = 5f;
         damage = 10f;
     }
 
@@ -92,6 +94,7 @@ public class Skeleton : Enemy
         anim_names[1] = "Hit";
         anim_names[2] = "Die";
         moveSpeed = 2f;
+        plusEXP = 10f;
         plusGold = 200f;
         damage = 20f;
     }

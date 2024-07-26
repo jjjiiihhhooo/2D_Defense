@@ -11,7 +11,7 @@ public class Item
 [System.Serializable]
 public class Data
 {
-    public Data(List<Item> _items, int _LV, int _SC, float _HP, float _ATK, float _DEF, float _EXP, float _AS, float _HR)
+    public Data(List<Item> _items, int _LV, int _SC, float _HP, float _ATK, float _DEF, float _EXP, float _AS, float _HR, float _curEXP)
     {
         Item_List = _items;
         LV = _LV;
@@ -22,6 +22,7 @@ public class Data
         EXP = _EXP;
         AS = _AS;
         HR = _HR;
+        curEXP = _curEXP;
     }
 
     public Data()
@@ -37,6 +38,7 @@ public class Data
     public float HP; //Max HP
     public float ATK;
     public float DEF;
+    public float curEXP;
     public float EXP;
     public float AS; //Attack Speed
     public float HR; //HP Repear
@@ -55,12 +57,13 @@ public class DataManager : MonoBehaviour
     {
         item_List = new List<Item>();
 
-        data = new Data(item_List, 1, 1, 100f, 1f, 0f, 0f, 2f, 0.1f);
+        data = new Data(item_List, 1, 1, 100f, 1f, 0f, 100f, 2f, 0.1f, 0f);
     }
 
     public void SetData(Data _data)
     {
         data = _data;
+
     }
 
     public void SetData()
@@ -72,5 +75,4 @@ public class DataManager : MonoBehaviour
     {
         gold += plus;
     }
-
 }

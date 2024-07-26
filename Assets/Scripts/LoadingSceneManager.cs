@@ -8,11 +8,12 @@ public class LoadingSceneManager : MonoBehaviour
 {
     public static string nextScene;
     [SerializeField] private Slider progressSlider;
+    [SerializeField] private Camera cam;
 
     public static void LoadScene(string sceneName)
     {
         nextScene = sceneName;
-        SceneManager.LoadScene("LoadingScene");
+        SceneManager.LoadScene("Loading");
     }
 
     private void Start()

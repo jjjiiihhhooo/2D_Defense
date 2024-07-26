@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,18 +12,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StageManager stageManager;
     [SerializeField] private DataManager dataManager;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private SoundManager soundManager;
     [SerializeField] private ObjectPool objectPool;
     [SerializeField] private Camera cam;
 
+    public GameObject waitRoom_obj;
     public GameObject player_obj;
 
     private string filePath;
 
-    public JoystickManager JoystickManager { get => joystickManager;}
-    public StageManager StageManager { get => stageManager;}
+    public JoystickManager JoystickManager { get => joystickManager; }
+    public StageManager StageManager { get => stageManager; }
     public DataManager DataManager { get => dataManager; }
     public UIManager UIManager { get => uiManager; }
-    public ObjectPool ObjectPool { get => objectPool;  }
+    public SoundManager SoundManager { get => soundManager; }
+    public ObjectPool ObjectPool { get => objectPool; }
 
     #region GameSetting
     private void Awake()
@@ -40,43 +44,37 @@ public class GameManager : MonoBehaviour
 
             DontDestroyOnLoad(this.gameObject);
         }
+
     }
 
-    private void Update()
+
+
+    private void Start()
     {
-        if (cam == null) { cam = Camera.main; CameraResolution(); Debug.Log("CamSet"); }
+        SceneManager.sceneLoaded += LoadedsceneEvent;
+    }
+
+    private void LoadedsceneEvent(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Main") waitRoom_obj.SetActive(true);
+
+        if(soundManager.audioDictionary.ContainsKey(scene.name))
+        {
+            soundManager.Play(scene.name, true);
+        }
     }
 
     private void Init()
     {
-        CameraResolution();
 
         filePath = Application.persistentDataPath + "/DataText.txt";
 
         LoadData();
+        soundManager.Init();
         joystickManager.Init();
     }
 
-    private void CameraResolution()
-    {
-        Rect rect = cam.rect;
-
-        float scaleHeight = ((float)Screen.width / Screen.height) / ((float)16 / 9); //(가로 / 세로)
-        float scaleWidth = 1f / scaleHeight;
-
-        if (scaleHeight < 1)
-        {
-            rect.height = scaleHeight;
-            rect.y = (1f - scaleHeight) / 2f;
-        }
-        else
-        {
-            rect.width = scaleWidth;
-            rect.x = (1f - scaleWidth) / 2f;
-        }
-
-        cam.rect = rect;
-    }
+    
 
     private void FrameSetting()
     {
@@ -89,6 +87,7 @@ public class GameManager : MonoBehaviour
     private void GameExit()
     {
         SaveData();
+        Application.Quit();
     }
 
     private void SaveData()
@@ -134,5 +133,15 @@ public class GameManager : MonoBehaviour
     public void GetStageManager(StageManager stage)
     {
         stageManager = stage;
+    }
+
+    public void GameStart()
+    {
+        string name = uiManager.StageCountText.text;
+        waitRoom_obj.SetActive(false);
+
+        soundManager.StopBGM();
+
+        LoadingSceneManager.LoadScene(name);
     }
 }

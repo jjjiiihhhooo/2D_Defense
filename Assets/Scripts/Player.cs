@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         Data _data = GameManager.Instance.DataManager.data;
-        data = new Data(_data.Item_List, _data.LV, _data.SC, _data.HP, _data.ATK, _data.DEF, _data.EXP, _data.AS, _data.HR);
+        data = new Data(_data.Item_List, _data.LV, _data.SC, _data.HP, _data.ATK, _data.DEF, _data.EXP, _data.AS, _data.HR, _data.curEXP);
         curHp = data.HP;
     }
 
@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
 
     public void Hit(float damage)
     {
+        GameManager.Instance.SoundManager.Play("PlayerHit", false);
         curHp -= damage;
     }
 

@@ -41,6 +41,7 @@ public class Attacker : MonoBehaviour
 
     public void AttackStart()
     {
+        GameManager.Instance.SoundManager.Play("PlayerAttack", false);
         weaponParent.rotation = transform.rotation;
     }
 }

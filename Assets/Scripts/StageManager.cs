@@ -10,15 +10,23 @@ public class StageManager : MonoBehaviour
     [SerializeField] private int waveCount;
     [SerializeField] private int enemyKillCount;
 
+    [SerializeField] private GameObject startMessage_obj;
     [SerializeField] private Wave[] waves;
+    [SerializeField] private StageUI stageUI;
 
     private Wave curWave;
 
-    private GameObject player;
+    private Player player;
 
     private int stageCurCount = 0;
 
-    public Slider playerHp_Slider;
+    private float maxEXP = 100;
+    private float curEXP = 0;
+
+    public float MaxEXP { get => maxEXP; }
+    public float CurEXP { get => curEXP; }
+
+
     public Transform[] waveSpawnTransforms;
     public Queue<int> enemyKillQueue;
 
@@ -26,10 +34,19 @@ public class StageManager : MonoBehaviour
     private void Awake()
     {
         enemyKillQueue = new Queue<int>();
+
         GameManager.Instance.GetStageManager(this);
-        player = Instantiate(GameManager.Instance.player_obj, Vector3.zero, Quaternion.identity);
-        GameManager.Instance.UIManager.GetPlayer(player.GetComponent<Player>());
+
+        GameObject temp = Instantiate(GameManager.Instance.player_obj, Vector3.zero, Quaternion.identity);
+        player = temp.GetComponent<Player>();
+        GameManager.Instance.JoystickManager.GetJoystick(stageUI.joystick);
+        stageUI.GetPlayer(player);
+        startMessage_obj.SetActive(true);
+        curEXP = 0;
+        maxEXP = 100;
     }
+
+   
 
     private void Update()
     {
@@ -74,5 +91,14 @@ public class StageManager : MonoBehaviour
         if (enemyKillCount >= count) WaveDestroy();
     }
 
-    
+    public void GetStageEXP(float _exp)
+    {
+        curEXP += _exp;
+        if (curEXP >= maxEXP)
+        {
+            curEXP = 0;
+            maxEXP *= 2;
+        }
+
+    }
 }

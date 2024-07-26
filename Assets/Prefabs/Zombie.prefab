@@ -176,6 +176,7 @@ MonoBehaviour:
     - 
     - 
     plusGold: 100
+    plusEXP: 5
     damage: 0
     moveSpeed: 1
   animator: {fileID: 2687024818052449681}

@@ -24,6 +24,8 @@ public class JoystickManager : MonoBehaviour
 
     private void InputJoystick()
     {
+        if (joy == null) return;
+
         if(joy.Vertical != 0 || joy.Horizontal != 0)
         {
             joyVertical = joy.Vertical;
@@ -35,5 +37,10 @@ public class JoystickManager : MonoBehaviour
         {
             angle = 0f;
         }
+    }
+
+    public void GetJoystick(FixedJoystick joystick)
+    {
+        joy = joystick;
     }
 }   

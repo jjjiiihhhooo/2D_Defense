@@ -1,32 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI stageCountText;
 
-    [SerializeField] private Slider playerHp;
-
-    private Player player;
+    public TextMeshProUGUI StageCountText { get => stageCountText; }
 
     private void Update()
     {
-        if (player == null) return;
-        HpUpdate();
+        TextUpdate();
     }
 
-    private void HpUpdate()
+    private void TextUpdate()
     {
-        if (playerHp == null) playerHp = GameManager.Instance.StageManager.playerHp_Slider;
-
-        playerHp.value = Mathf.Lerp(playerHp.value, player.CurHp / player.MaxHp , Time.deltaTime * 5f);
-    }
-
-
-    public void GetPlayer(Player _player)
-    {
-        player = _player;
+        stageCountText.text = "STAGE " + GameManager.Instance.DataManager.data.SC.ToString();
     }
 
 }

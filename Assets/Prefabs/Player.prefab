@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 1737672109, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.28235295}
   m_FlipX: 0
@@ -163,7 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponParent: {fileID: 8605327363503418807}
   weaponCol: {fileID: 8605327363756838344}
-  damage: 50
   knockBackPower: 5
 --- !u!1 &8605327363681775188
 GameObject:
@@ -238,7 +237,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: -1442216141, guid: 8f7a60065e3984c489b9c4d41bc3dc4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -359,6 +358,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attacker: {fileID: 8605327363546887424}
   playerModelRenderer: {fileID: 8605327363681775191}
+  data:
+    Item_List: []
+    LV: 0
+    SC: 0
+    HP: 0
+    ATK: 0
+    DEF: 0
+    curEXP: 0
+    EXP: 0
+    AS: 0
+    HR: 0
   curHp: 100
   maxHp: 100
 --- !u!1 &8605327363756838341
@@ -436,7 +446,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 1737672109, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

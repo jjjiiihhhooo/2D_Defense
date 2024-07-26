@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class EnemyController : MonoBehaviour
         target = FindObjectOfType<Player>().transform;
     }
 
+    
 
     private void FixedUpdate()
     {
@@ -66,6 +68,8 @@ public class EnemyController : MonoBehaviour
     {
         if (isHit) return;
         if (isDead) return;
+
+        GameManager.Instance.SoundManager.Play("EnemyHit", false);
         isHit = true;
         curHp -= damage;
 
@@ -85,6 +89,7 @@ public class EnemyController : MonoBehaviour
     public void Dead()
     {
         GameManager.Instance.DataManager.PlusGold(enemy.plusGold);
+        GameManager.Instance.StageManager.GetStageEXP(enemy.plusEXP);
         Enqueue();
 
         Return();
