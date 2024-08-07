@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
-
-    [Header("무기관련")]
+    [Header("Weapon")]
     [SerializeField] private Attacker attacker;
 
-    [Header("렌더러")]
+    [Header("Renderer")]
     [SerializeField] private SpriteRenderer playerModelRenderer;
 
     [Header("State")]
@@ -17,20 +13,16 @@ public class Player : MonoBehaviour
     [SerializeField] private float curHp;
     [SerializeField] private float maxHp;
 
-    public Attacker Attacker { get => attacker; }
     public float CurHp { get => curHp; }
     public float MaxHp { get => data.HP; }
-
-    //public Player(Data _data)
-    //{
-    //    data = new Data(_data.Item_List, _data.LV, _data.SC, _data.HP, _data.ATK, _data.DEF, _data.EXP, _data.AS, _data.HR, _data.AA);
-    //    curHp = data.HP;
-    //}
 
     private void OnEnable()
     {
         Data _data = GameManager.Instance.DataManager.data;
         data = new Data(_data.Item_List, _data.LV, _data.SC, _data.HP, _data.ATK, _data.DEF, _data.EXP, _data.AS, _data.HR, _data.curEXP);
+
+        attacker.DamageData.SetDamage(data.ATK);
+
         curHp = data.HP;
     }
 
@@ -53,11 +45,11 @@ public class Player : MonoBehaviour
     public void AttackerRot()
     {
         float zAngle = GameManager.Instance.JoystickManager.Angle;
-        if (zAngle == 0f || attacker.IsAttack) return;
+        if (zAngle == 0f) return;
 
         attacker.transform.rotation = Quaternion.Euler(0f, 0f, zAngle);
 
-        if(zAngle > 90f || zAngle < -90f)
+        if (zAngle > 90f || zAngle < -90f)
         {
             playerModelRenderer.flipX = true;
         }

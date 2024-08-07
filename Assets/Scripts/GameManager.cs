@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,9 +44,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
-
-
     private void Start()
     {
         SceneManager.sceneLoaded += LoadedsceneEvent;
@@ -58,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "Main") waitRoom_obj.SetActive(true);
 
-        if(soundManager.audioDictionary.ContainsKey(scene.name))
+        if (soundManager.audioDictionary.ContainsKey(scene.name))
         {
             soundManager.Play(scene.name, true);
         }
@@ -66,15 +61,12 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
-
         filePath = Application.persistentDataPath + "/DataText.txt";
 
         LoadData();
-        soundManager.Init();
-        joystickManager.Init();
     }
 
-    
+
 
     private void FrameSetting()
     {
@@ -103,7 +95,7 @@ public class GameManager : MonoBehaviour
     private void LoadData()
     {
         Debug.Log(filePath);
-        if(!File.Exists(filePath)) { dataManager.DefaultData(); SaveData(); }
+        if (!File.Exists(filePath)) { dataManager.DefaultData(); SaveData(); }
 
         string code = File.ReadAllText(filePath);
         byte[] bytes = System.Convert.FromBase64String(code);

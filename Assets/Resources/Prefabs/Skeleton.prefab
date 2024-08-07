@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1942462910339623231}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,23 +47,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1c0840213859841975fffcfa651f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHp: 2
-  maxHp: 2
+  curHp: 100
+  maxHp: 100
   index: 1
-  enemy:
-    anim_names:
-    - 
-    - 
-    - 
-    plusGold: 100
-    plusEXP: 10
-    damage: 0
-    moveSpeed: 1
   animator: {fileID: 1942462910603188180}
-  Temp: {fileID: 0}
   target: {fileID: 0}
   enemyRenderer: {fileID: 1942462910603188183}
   rigid: {fileID: 1942462910339623230}
+  anim_names:
+  - Run
+  - Hit
+  - Die
+  plusGold: 200
+  plusEXP: 10
+  damage: 20
+  moveSpeed: 1
 --- !u!50 &1942462910339623230
 Rigidbody2D:
   serializedVersion: 4

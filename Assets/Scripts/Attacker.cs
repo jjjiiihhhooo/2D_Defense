@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
     [SerializeField] private Transform weaponParent;
     [SerializeField] private BoxCollider2D weaponCol;
-    [SerializeField] private float knockBackPower;
+    [SerializeField] private DamageData damageData;
 
-    private bool isAttack;
+    public DamageData DamageData { get => damageData; }
+
     private float colliderDelay = 0.1f;
-
-    public bool IsAttack { get => isAttack; }
-    public float KnockBackPower { get => knockBackPower; }
 
     private void Update()
     {
@@ -24,14 +20,12 @@ public class Attacker : MonoBehaviour
         if (weaponCol.enabled)
         {
             colliderDelay -= Time.deltaTime;
-            if(colliderDelay <= 0f)
+            if (colliderDelay <= 0f)
             {
                 weaponCol.enabled = false;
                 colliderDelay = 0.1f;
             }
-            
         }
-        
     }
 
     public void AttackCol()
@@ -44,4 +38,7 @@ public class Attacker : MonoBehaviour
         GameManager.Instance.SoundManager.Play("PlayerAttack", false);
         weaponParent.rotation = transform.rotation;
     }
+
+
+
 }

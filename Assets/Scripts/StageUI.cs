@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,16 +9,11 @@ public class StageUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI playerHpText;
     [SerializeField] private TextMeshProUGUI stageEXpText;
+    [SerializeField] private StageManager stageManager;
 
     private Player player;
-    private StageManager stageManager;
 
     public FixedJoystick joystick;
-
-    private void Start()
-    {
-        stageManager = transform.parent.GetComponent<StageManager>();
-    }
 
     private void Update()
     {

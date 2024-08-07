@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -12,37 +9,48 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Enemy enemy;
     [SerializeField] private Animator animator;
 
-    public Transform Temp;
-
-    [HideInInspector] public Transform target;
+    public Transform target;
 
     public SpriteRenderer enemyRenderer;
     public Rigidbody2D rigid;
     public Animator Animator { get => animator; }
+
+    public string[] anim_names;
+
+    public float plusGold;
+    public float plusEXP;
+    public float damage;
+    public float moveSpeed;
 
     private bool isHit;
     private bool isDead;
 
     private void Start()
     {
-        curHp = maxHp;
-
-        if (index == 0)
-            enemy = new Zombie();
-        else if (index == 1)
-            enemy = new Skeleton();
-
-        enemy.Awake(this);
-        target = FindObjectOfType<Player>().transform;
+        SelectEnemy();
+        EnemyInit();
     }
-
-    
 
     private void FixedUpdate()
     {
         enemy.Update();
     }
 
+    private void EnemyInit()
+    {
+        curHp = maxHp;
+        target = GameManager.Instance.StageManager.Player.transform;
+    }
+
+    private void SelectEnemy()
+    {
+        if (index == 0)
+            enemy = new Zombie();
+        else if (index == 1)
+            enemy = new Skeleton();
+
+        enemy.Awake(this);
+    }
 
     public void VelocityZero()
     {
@@ -64,19 +72,19 @@ public class EnemyController : MonoBehaviour
         isHit = false;
     }
 
-    public void Hit(float damage)
+    public void Hit(float damage, float _knockBackPower)
     {
         if (isHit) return;
         if (isDead) return;
 
         GameManager.Instance.SoundManager.Play("EnemyHit", false);
+
         isHit = true;
         curHp -= damage;
 
         if (curHp <= 0) Die();
-        
-        enemy.Hit();
-        
+
+        enemy.Hit(_knockBackPower);
     }
 
     private void Die()
@@ -88,8 +96,8 @@ public class EnemyController : MonoBehaviour
 
     public void Dead()
     {
-        GameManager.Instance.DataManager.PlusGold(enemy.plusGold);
-        GameManager.Instance.StageManager.GetStageEXP(enemy.plusEXP);
+        GameManager.Instance.DataManager.PlusGold(plusGold);
+        GameManager.Instance.StageManager.GetStageEXP(plusEXP);
         Enqueue();
 
         Return();
@@ -109,14 +117,16 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Weapon")
+        if (other.tag == "Weapon")
         {
-            Hit(target.GetComponent<Player>().GetAttackDamage());
+            DamageData damageData = other.GetComponent<DamageData>();
+
+            Hit(damageData.Damage, damageData.KnockBackPower);
         }
 
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            target.GetComponent<Player>().Hit(enemy.damage);
+            target.GetComponent<Player>().Hit(damage);
             Enqueue();
             Return();
         }

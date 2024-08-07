@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Wave : MonoBehaviour
@@ -34,8 +32,8 @@ public class Wave : MonoBehaviour
     private void WaveExcute()
     {
         if (!isWaveStart) return;
-        if (curWaveCount <= 0) 
-        { 
+        if (curWaveCount <= 0)
+        {
             WaveClear();
             return;
         }
@@ -46,21 +44,21 @@ public class Wave : MonoBehaviour
             return;
         }
 
-        if(enemyDelay > 0)
+        if (enemyDelay > 0)
         {
             enemyDelay -= Time.deltaTime;
         }
         else
         {
             enemyDelay = 0.3f;
-            if(enemyCount < maxEnemyCount)
+            if (enemyCount < maxEnemyCount)
             {
                 enemyCount++;
-                int rand = Random.Range(0, enemys.Length);
-                int rand2 = Random.Range(0, GameManager.Instance.StageManager.waveSpawnTransforms.Length);
-                
-                GameObject enemy = GameManager.Instance.ObjectPool.Dequeue(enemys[rand].name);
-                enemy.transform.position = GameManager.Instance.StageManager.waveSpawnTransforms[rand2].position;
+
+                GameObject enemy = SpawnEnemy();
+
+                enemy.transform.position = RandomPosition();
+
                 enemy.transform.parent = this.transform;
                 enemy.SetActive(true);
             }
@@ -71,6 +69,20 @@ public class Wave : MonoBehaviour
                 curWaveCount--;
             }
         }
+    }
+
+    private GameObject SpawnEnemy()
+    {
+        int rand = Random.Range(0, enemys.Length);
+
+        return GameManager.Instance.ObjectPool.Dequeue(enemys[rand].name);
+    }
+
+    private Vector3 RandomPosition()
+    {
+        int rand = Random.Range(0, GameManager.Instance.StageManager.waveSpawnTransforms.Length);
+
+        return GameManager.Instance.StageManager.waveSpawnTransforms[rand].position;
     }
 
     public void WaveStart()

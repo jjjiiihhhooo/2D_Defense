@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +19,7 @@ public class ObjectPool : MonoBehaviour
     {
         pool_Dic = new Dictionary<string, Queue<GameObject>>();
 
-        for(int i = 0; i < objectPrefabs.Length; i++)
+        for (int i = 0; i < objectPrefabs.Length; i++)
         {
             pool_Dic.Add(objectPrefabs[i].name, new Queue<GameObject>());
 
@@ -42,7 +41,7 @@ public class ObjectPool : MonoBehaviour
 
     public void Enqueue()
     {
-        for(int i = 0; i < pool_Dic.Count; i++)
+        for (int i = 0; i < pool_Dic.Count; i++)
         {
             if (pool_Dic[objectPrefabs[i].name].Count <= 0)
             {

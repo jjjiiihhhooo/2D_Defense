@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JoystickManager : MonoBehaviour
@@ -11,22 +9,16 @@ public class JoystickManager : MonoBehaviour
 
     public float Angle { get => angle; }
 
-    public void Init()
-    {
-
-    }
-
     private void Update()
     {
         InputJoystick();
-        
     }
 
     private void InputJoystick()
     {
         if (joy == null) return;
 
-        if(joy.Vertical != 0 || joy.Horizontal != 0)
+        if (joy.Vertical != 0 || joy.Horizontal != 0)
         {
             joyVertical = joy.Vertical;
             joyHorizontal = joy.Horizontal;
@@ -43,4 +35,4 @@ public class JoystickManager : MonoBehaviour
     {
         joy = joystick;
     }
-}   
+}

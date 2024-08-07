@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class AudioData
 {
-    [Header("들어갈 사운드")]
+    [Header("Audio")]
     public AudioClip audio;
-    [Header("사운드 이름(배경음은 해당 씬 이름이랑 동일하게)")]
+    [Header("Sound Name (BGM = Scene Name)")]
     public string audioName;
 }
 public class SoundManager : MonoBehaviour
@@ -18,29 +17,32 @@ public class SoundManager : MonoBehaviour
     public Dictionary<string, AudioClip> audioDictionary;
 
     [SerializeField] private AudioSource[] audioSources;
-    //Manager.Instance.soundManager.Play(Manager.Instance.soundManager.audioDictionary["이름"], false);
 
     public string curBGM;
+
+    private void Awake()
+    {
+        Init();
+    }
 
     private void Update()
     {
         EndBGM();
     }
 
+    private void Init()
+    {
+        audioDictionary = new Dictionary<string, AudioClip>();
+        for (int i = 0; i < audioDatas.Length; i++) audioDictionary.Add(audioDatas[i].audioName, audioDatas[i].audio);
+    }
+
     private void EndBGM()
     {
         if (!audioSources[0].isPlaying)
         {
-            if(curBGM != "")
+            if (curBGM != "")
                 Play(curBGM, true);
         }
-    }
-
-    public void Init()
-    {
-        audioDictionary = new Dictionary<string, AudioClip>();
-        for (int i = 0; i < audioDatas.Length; i++) audioDictionary.Add(audioDatas[i].audioName, audioDatas[i].audio);
-
     }
 
     public void StopBGM()
@@ -53,8 +55,6 @@ public class SoundManager : MonoBehaviour
     {
         if (audioDictionary[name] == null)
             return;
-
-
 
         if (_isBgm) // BGM 배경음악 재생
         {
@@ -72,6 +72,4 @@ public class SoundManager : MonoBehaviour
             audioSources[1].PlayOneShot(audioDictionary[name]);
         }
     }
-
-
 }

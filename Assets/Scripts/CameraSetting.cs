@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraSetting : MonoBehaviour
@@ -16,10 +14,7 @@ public class CameraSetting : MonoBehaviour
 
     private void CameraResolution()
     {
-        Debug.LogError("noCam");
-
         if (cam == null) cam = Camera.main;
-        Debug.LogError("Cam");
         Rect rect = cam.rect;
 
         float scaleHeight = ((float)Screen.width / Screen.height) / ((float)16 / 9); //(가로 / 세로)

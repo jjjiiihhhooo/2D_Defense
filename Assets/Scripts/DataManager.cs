@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,7 +49,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] private List<Item> item_List;
 
     public Data data;
-    
+
     public float Gold { get => gold; }
 
     public void DefaultData()

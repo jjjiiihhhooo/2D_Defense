@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
 {
@@ -13,6 +10,8 @@ public class StageManager : MonoBehaviour
     [SerializeField] private GameObject startMessage_obj;
     [SerializeField] private Wave[] waves;
     [SerializeField] private StageUI stageUI;
+    [SerializeField] private Weapon[] weapons;
+
 
     private Wave curWave;
 
@@ -23,6 +22,7 @@ public class StageManager : MonoBehaviour
     private float maxEXP = 100;
     private float curEXP = 0;
 
+    public Player Player { get => player; }
     public float MaxEXP { get => maxEXP; }
     public float CurEXP { get => curEXP; }
 
@@ -33,24 +33,38 @@ public class StageManager : MonoBehaviour
 
     private void Awake()
     {
-        enemyKillQueue = new Queue<int>();
-
-        GameManager.Instance.GetStageManager(this);
-
-        GameObject temp = Instantiate(GameManager.Instance.player_obj, Vector3.zero, Quaternion.identity);
-        player = temp.GetComponent<Player>();
-        GameManager.Instance.JoystickManager.GetJoystick(stageUI.joystick);
-        stageUI.GetPlayer(player);
-        startMessage_obj.SetActive(true);
-        curEXP = 0;
-        maxEXP = 100;
+        GetInit();
+        SpawnPlayer();
+        StageInit();
     }
-
-   
 
     private void Update()
     {
         QueueCheck();
+    }
+
+    private void GetInit()
+    {
+        GameManager.Instance.GetStageManager(this);
+        GameManager.Instance.JoystickManager.GetJoystick(stageUI.joystick);
+    }
+
+    private void SpawnPlayer()
+    {
+        GameObject temp = Instantiate(GameManager.Instance.player_obj, Vector3.zero, Quaternion.identity);
+
+        player = temp.GetComponent<Player>();
+    }
+
+    private void StageInit()
+    {
+        enemyKillQueue = new Queue<int>();
+
+        stageUI.GetPlayer(player);
+        startMessage_obj.SetActive(true);
+
+        curEXP = 0;
+        maxEXP = 100;
     }
 
     private void QueueCheck()
@@ -66,7 +80,9 @@ public class StageManager : MonoBehaviour
     {
         stageCurCount++;
         enemyKillCount = 0;
+
         Destroy(curWave.gameObject);
+
         if (stageCurCount <= stageCount) StageStart();
         else StageClear();
     }
